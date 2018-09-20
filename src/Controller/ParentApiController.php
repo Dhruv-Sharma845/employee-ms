@@ -59,6 +59,11 @@ class ParentApiController {
         return $this->setStatusCode(201)->respond($data);
     }
 
+    public function respondUpdated($data = [])
+    {
+        return $this->setStatusCode(201)->respond($data);
+    }
+
     // this method allows us to accept JSON payloads in POST requests 
     // since Symfony 4 doesn't handle that automatically:
 

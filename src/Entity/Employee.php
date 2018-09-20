@@ -31,6 +31,11 @@ class Employee
      */
     private $phone;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="employees")
+     */
+    private $company;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,18 @@ class Employee
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
 
         return $this;
     }
