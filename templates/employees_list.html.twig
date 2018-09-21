@@ -1,0 +1,27 @@
+<h2>Employees List</h2>
+<hr>
+<hr>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+                <tr>
+                    <td>
+                        <span class="glyphicon glyphicon-remove" onclick="removeEmployee({{employee.id}})"></span>
+                    </td>
+                    <td>{{employee.firstName}}</td>
+                    <td>{{employee.lastName}}</td>
+                    <td>{{employee.phone}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

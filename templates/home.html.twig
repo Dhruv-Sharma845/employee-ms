@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}Employee Management System{% endblock %}
+        </title>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css"/>
+    </head>
+    <body>
+        <div align="center">
+            <h1>{{ msg }}</h1>
+        </div>
+        <hr>
+        {% block body %}
+            <div class="container">
+                <div class="row">
+                    <!-- View for employees -->
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-success" onclick="showAddEmployeeForm()">Add Employee</button>
+                        <form style="display:none;" id="add_employee_form">
+                            <div class="form-group">
+                                <label for="firstName">First Name:</label>
+                                <input type="text" class="form-control" name="emp_firstName" id="firstName">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name:</label>
+                                <input type="text" class="form-control" name="emp_lastName" id="lastName">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone:</label>
+                                <input type="text" class="form-control" name="emp_phone" id="phone">
+                            </div>
+                            <button type="submit" class="btn btn-default">Create</button>
+                        </form>
+
+                        <div id="employeesListDiv">
+                            {{ render(controller(
+                                    'App\\Controller\\EmployeeController::getEmployeesAll'
+                                    )
+                                ) 
+                            }}
+                        </div>
+                    </div>
+
+                    <!-- View for companies -->
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-success" onclick="showAddCompanyForm()">Add Company</button>
+                        <form style="display:none;" id="add_company_form">
+                            <div class="form-group">
+                                <label for="cmp_name">Name:</label>
+                                <input type="text" class="form-control" name="cmp_name" id="cmp_name">
+                            </div>
+                            <div class="form-group">
+                                <label for="cmp_address">Address:</label>
+                                <input type="text" class="form-control" name="cmp_address" id="cmp_address">
+                            </div>
+                            <div class="form-group">
+                                <label for="cmp_phone">Phone:</label>
+                                <input type="text" class="form-control" name="cmp_phone" id="cmp_phone">
+                            </div>
+                            <button type="submit" class="btn btn-default">Create</button>
+                        </form>
+
+                        <div id="companiesListDiv">
+                            {{ render(controller(
+                                    'App\\Controller\\CompanyController::getCompaniesAll'
+                                    )
+                                ) 
+                            }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/employee_handler.js"></script>
+        <script type="text/javascript" src="js/company_handler.js"></script>
+        <script type="text/javascript" src="js/jquery.serializeToJSON.js"></script>
+    </body>
+</html>

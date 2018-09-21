@@ -22,7 +22,14 @@ class CompanyController extends ParentApiController {
      */
     public function getCompaniesAll(CompanyRepository $companyRepository) {
         $companies = $companyRepository->transformAll();
-        return $this->respond($companies);
+        if(!$companies) {
+            throw $this->createNotFoundException('The employee does not exist for the id'.$id); 
+        }
+
+        //return $this->respond($companies);
+        return $this->render("companies_list.html.twig",[
+            "companies" => $companies
+        ]);
     }
 
     /**
@@ -51,6 +58,23 @@ class CompanyController extends ParentApiController {
         $em->flush();
 
         return $this->respondCreated($companyRepository->transform($company));
+    }
+
+    /**
+     * @Route("/remove/{id}", requirements={"id"="\d+"})
+     * @Method("DELETE")
+     */
+    public function deleteCompany($id, Request $request, CompanyRepository $companyRepository, EntityManagerInterface $em) {
+        $request = $this->transformJsonBody($request);
+
+        $company = $companyRepository->find($id);
+        if(!$company) {
+            throw $this->createNotFoundException('No company found for id '.$id);
+        }
+        $em->remove($company);
+        $em->flush();
+
+        return $this->respond($companyRepository->transform($company));
     }
 
     /**

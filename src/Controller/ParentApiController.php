@@ -3,8 +3,14 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Psr\Log\LoggerInterface;
 
-class ParentApiController {
+
+class ParentApiController extends AbstractController {
+
+    protected $logger;
+
     /**
      * @var integer HTTP status code - 200 (OK) by default
      */
@@ -70,7 +76,6 @@ class ParentApiController {
     protected function transformJsonBody(\Symfony\Component\HttpFoundation\Request $request)    
     {
         $data = json_decode($request->getContent(), true);
-
         if (json_last_error() !== JSON_ERROR_NONE) {
             return null;
         }
