@@ -9,6 +9,7 @@
                 <th>FirstName</th>
                 <th>LastName</th>
                 <th>Phone</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +21,12 @@
                     <td>{{employee.firstName}}</td>
                     <td>{{employee.lastName}}</td>
                     <td>{{employee.phone}}</td>
+                    <td>
+                        <span class="glyphicon glyphicon-edit" onclick="showUpdateEmployeeForm({{employee.id}},'{{employee.firstName}}','{{employee.lastName}}','{{employee.phone}}')"></span>
+                        <span class="glyphicon glyphicon-share-alt" onclick="showSelectCompanyDropDown()"></span>
+                    </td>
                 </tr>
+                <!--<tr> <td></td> <td></td> <td></td> <td>Move employee to:</td> <td> <div class="dropdown"> <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example <span class="caret"></span></button> <ul class="dropdown-menu"> <li> <a href="#">HTML</a> </li> <li> <a href="#">CSS</a> </li> <li> <a href="#">JavaScript</a> </li> </ul> </div> </td> </tr>-->
             {% endfor %}
         </tbody>
     </table>

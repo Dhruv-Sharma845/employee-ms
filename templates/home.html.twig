@@ -23,17 +23,38 @@
                         <form style="display:none;" id="add_employee_form">
                             <div class="form-group">
                                 <label for="firstName">First Name:</label>
-                                <input type="text" class="form-control" name="emp_firstName" id="firstName">
+                                <input type="text" class="form-control" name="emp_firstName" id="firstName" required="required">
                             </div>
                             <div class="form-group">
                                 <label for="lastName">Last Name:</label>
-                                <input type="text" class="form-control" name="emp_lastName" id="lastName">
+                                <input type="text" class="form-control" name="emp_lastName" id="lastName" required="required">
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone:</label>
-                                <input type="text" class="form-control" name="emp_phone" id="phone">
+                                <input type="text" class="form-control" name="emp_phone" id="phone" required="required">
                             </div>
                             <button type="submit" class="btn btn-default">Create</button>
+                        </form>
+
+                        <!-- update employee form -->
+
+                        <form style="display:none;" id="update_employee_form">
+                            <div class="form-group">
+                                <input type="hidden" name="update_emp_id" id="update_id" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="update_firstName">First Name:</label>
+                                <input type="text" class="form-control" name="update_emp_firstName" id="update_firstName" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="update_lastName">Last Name:</label>
+                                <input type="text" class="form-control" name="update_emp_lastName" id="update_lastName" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="update_phone">Phone:</label>
+                                <input type="text" class="form-control" name="update_emp_phone" id="update_phone" required="required">
+                            </div>
+                            <button type="submit" class="btn btn-default">Update</button>
                         </form>
 
                         <div id="employeesListDiv">

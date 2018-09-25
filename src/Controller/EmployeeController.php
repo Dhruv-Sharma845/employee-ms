@@ -5,7 +5,8 @@ use App\Entity\Employee;
 use App\Repository\EmployeeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+//use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class EmployeeController extends ParentApiController {
 
     /**
-     * @Route("/")
+     * @Route("/",name="employees")
      * @Method("GET")
      */
     public function getEmployeesAll(EmployeeRepository $employeeRepository) {
@@ -34,20 +35,20 @@ class EmployeeController extends ParentApiController {
     public function getEmployeeById($id, EmployeeRepository $employeeRepository) {
         $employee = $employeeRepository->find($id);
         if(!$employee) {
-            throw $this->createNotFoundException('The employee does not exist for the id'.$id);
+            throw $this->createNotFoundException('The employee does not exist for the id '.$id);
         }
         $employee = $employeeRepository->transform($employee);
         return $this->respond($employee);
     }
 
     /**
-    * @Route("/create")
-    * @Method("POST")
+    * @Route("/create",name="employees_create")
+    * @Method({"POST"})
     */
     public function create(Request $request, EmployeeRepository $employeeRepository, EntityManagerInterface $em, LoggerInterface $logger)
     {
-        $logger->info($request->getContent());
         $request = $this->transformJsonBody($request);
+        
         // persist the new employee
         $employee = new Employee;
         $employee->setFirstName($request->get('firstName'));
@@ -64,7 +65,7 @@ class EmployeeController extends ParentApiController {
      * @Route("/update/{id}", requirements={"id"="\d+"})
      * @Method("PUT")
      */
-    public function updateEmployee($id, Request $request, EmployeeRepository $employeeRepository, EntityManagerInterface $em) {
+    public function updateEmployee($id, Request $request, EmployeeRepository $employeeRepository, EntityManagerInterface $em, LoggerInterface $logger) {
         $request = $this->transformJsonBody($request);
 
         $employee = $employeeRepository->find($id);
@@ -75,6 +76,8 @@ class EmployeeController extends ParentApiController {
         $em->persist($employee);
         $em->flush();
 
+        $logger->info("Employee updated!!");
+
         return $this->respondUpdated($employeeRepository->transform($employee));
     }
 
@@ -82,7 +85,7 @@ class EmployeeController extends ParentApiController {
      * @Route("/remove/{id}", requirements={"id"="\d+"})
      * @Method("DELETE")
      */
-    public function deleteEmployee($id, Request $request, EmployeeRepository $employeeRepository, EntityManagerInterface $em) {
+    public function deleteEmployee($id, Request $request, EmployeeRepository $employeeRepository, EntityManagerInterface $em, LoggerInterface $logger) {
         $request = $this->transformJsonBody($request);
 
         $employee = $employeeRepository->find($id);
@@ -91,6 +94,8 @@ class EmployeeController extends ParentApiController {
         }
         $em->remove($employee);
         $em->flush();
+
+        $logger.info("Employee removed from database!!");
 
         return $this->respond($employeeRepository->transform($employee));
     }
